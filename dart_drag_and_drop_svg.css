@@ -1,0 +1,45 @@
+body {
+  background-color: #F8F8F8;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.2em;
+  margin: 15px;
+}
+
+h1, p {
+  color: #333;
+}
+
+section > svg#app_container {
+  position: relative;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+section > svg#app_container > g > rect.processing_body {
+  fill: #efefef;
+  stroke: #dadada;
+}
+
+section > svg#app_container > g > rect.port {
+  fill: #dadada;
+  stroke: #dadada;
+}
+
+section > svg#app_container > g:hover > rect.processing_body {
+  stroke: #ababab;
+}
+
+section > svg#app_container > g:hover > rect.port {
+  fill: #ababab;
+  stroke: #ababab;
+}
+
+section > svg#app_container > g:hover > rect.processing_body:hover {
+  cursor: move;
+}
+
+section > svg#app_container > g:hover > rect.port:hover {
+  cursor: pointer;
+}
