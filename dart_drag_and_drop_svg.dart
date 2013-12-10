@@ -10,51 +10,49 @@ class BasicUnit {
   bool dragging;
   num dragOffsetX, dragOffsetY, width, height;
   
-  BasicUnit(SvgSvgElement canvas, num x, num y, num width, num height) {
-    this.canvas = canvas;
-    this.width = width;
-    this.height = height;
+  BasicUnit(SvgSvgElement this.canvas, num x, num y, num this.width, num this.height) {
     
-    this.body = new RectElement();
-    this.body.setAttribute('x', '$x');
-    this.body.setAttribute('y', '$y');
-    this.body.setAttribute('width', '$width');
-    this.body.setAttribute('height', '$height');
-    this.body.classes.add('processing_body');
+    body = new RectElement();
+    body.setAttribute('x', '$x');
+    body.setAttribute('y', '$y');
+    body.setAttribute('width', '$width');
+    body.setAttribute('height', '$height');
+    body.classes.add('processing_body');
     
-    this.body.onMouseDown.listen((MouseEvent e) => select(e));
-    this.body.onMouseMove.listen((MouseEvent e) => moveStarted(e));
-    this.body.onMouseUp.listen((MouseEvent e) => moveCompleted(e));
-    this.body.onMouseLeave.listen((MouseEvent e) => moveCompleted(e));
+    body.onMouseDown.listen(select);
+    canvas.onMouseMove.listen(moveStarted);
+    body.onMouseUp.listen(moveCompleted);
+    canvas.onMouseLeave.listen(moveCompleted);
     
-    this.group = new GElement();
-    this.group.append(this.body);
+    group = new GElement();
+    group.append(body);
     
-    this.dragging = false;
+    dragging = false;
   }
   
   void select(MouseEvent e) {
-    this.dragging = true;
-    this.group.parentNode.append(this.group);
+    e.preventDefault();
+    dragging = true;
     
-    var mouseCoordinates = this.getMouseCoordinates(e);
-    this.dragOffsetX = mouseCoordinates['x'] - this.body.getCtm().e; //double.parse(this.body.attributes['x']);
-    this.dragOffsetY = mouseCoordinates['y'] - this.body.getCtm().f; //double.parse(this.body.attributes['y']);
+    var mouseCoordinates = getMouseCoordinates(e);
+    dragOffsetX = mouseCoordinates['x'] - body.getCtm().e; //double.parse(body.attributes['x']);
+    dragOffsetY = mouseCoordinates['y'] - body.getCtm().f;
   }
   
   void moveStarted(MouseEvent e) {
-    if (this.dragging) {
-      var mouseCoordinates = this.getMouseCoordinates(e);
-      num newX = mouseCoordinates['x'] - this.dragOffsetX;
-      num newY = mouseCoordinates['y'] - this.dragOffsetY;
-      //this.body.setAttribute('x', '$newX');
-      //this.body.setAttribute('y', '$newY');
-      this.body.setAttribute('transform', 'translate($newX, $newY)');
+    e.preventDefault();
+    
+    if (dragging) {
+      var mouseCoordinates = getMouseCoordinates(e);
+      num newX = mouseCoordinates['x'] - dragOffsetX;
+      num newY = mouseCoordinates['y'] - dragOffsetY;
+      body.setAttribute('transform', 'translate($newX, $newY)');
     }
   }
   
   void moveCompleted(MouseEvent e) {
-    this.dragging = false;
+    e.preventDefault();
+    dragging = false;
   }
   
   dynamic getMouseCoordinates(e) {
