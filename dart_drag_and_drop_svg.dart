@@ -61,14 +61,8 @@ class BasicUnit {
 }
 
 class Application {
-  /*
-   * Constants
-   */
   int WIDTH = 80, HEIGHT = 60;
   
-  /*
-   * Class variables
-   */
   SvgSvgElement canvas;
   
   Application(canvas_id) {
