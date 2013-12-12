@@ -19,9 +19,6 @@ class BasicUnit {
     this.body.classes.add('processing_body');
     
     this.body.onMouseDown.listen(select);
-    this.body.onMouseMove.listen(moveStarted);
-    this.body.onMouseUp.listen(moveCompleted);
-    this.body.onMouseLeave.listen(moveCompleted);
     
     this.group = new GElement();
     this.group.append(this.body);
@@ -36,6 +33,9 @@ class BasicUnit {
     var mouseCoordinates = getMouseCoordinates(e);
     this.dragOffsetX = mouseCoordinates['x'] - body.getCtm().e; //double.parse(body.attributes['x']);
     this.dragOffsetY = mouseCoordinates['y'] - body.getCtm().f;
+    
+    this.canvas.onMouseMove.listen(moveStarted).resume();
+    this.canvas.onMouseUp.listen(moveCompleted).resume();
   }
   
   void moveStarted(MouseEvent e) {
@@ -52,6 +52,9 @@ class BasicUnit {
   void moveCompleted(MouseEvent e) {
     e.preventDefault();
     this.dragging = false;
+    
+    this.canvas.onMouseMove.listen(moveStarted).cancel();
+    this.canvas.onMouseUp.listen(moveCompleted).cancel();
   }
   
   dynamic getMouseCoordinates(e) {
