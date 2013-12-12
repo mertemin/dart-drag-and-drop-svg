@@ -5,7 +5,7 @@ This is a basic example showing how to draw, select and move squares around. Dou
 [Here](http://mertemin.github.io/dart-drag-and-drop-svg/)
 
 ## Issues
-* Mouse is slipping over square if you want to drag fast
+* ~~Mouse is slipping over square if you want to drag fast~~ [see](http://stackoverflow.com/questions/20451699/dart-svg-drag-and-drop-slipping-mouse)
 
 ## Changelog
 * **v0.1** - Dart drag and drop using SVG is now ready to be downloaded
