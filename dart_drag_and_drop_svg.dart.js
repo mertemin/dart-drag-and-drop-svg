@@ -5744,6 +5744,12 @@ _EventStreamSubscription: {"": "StreamSubscription;_pauseCount,_target,_eventTyp
     this._target = null;
     this._onData = null;
   },
+  resume$0: function() {
+    if (this._target == null || this._pauseCount <= 0)
+      return;
+    this._pauseCount = this._pauseCount - 1;
+    this._tryResume$0();
+  },
   _tryResume$0: function() {
     var t1 = this._onData;
     if (t1 != null && this._pauseCount <= 0)
@@ -6004,12 +6010,30 @@ main: function() {
 
 BasicUnit: {"": "Object;canvas,group,body,dragging,dragOffsetX,dragOffsetY,width,height",
   select$1: function(_, e) {
-    var mouseCoordinates;
+    var mouseCoordinates, t1, t2;
     J.preventDefault$0$x(e);
     this.dragging = true;
     mouseCoordinates = this.getMouseCoordinates$1(e);
     this.dragOffsetX = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "x"), J.getCtm$0$x(this.body).e);
     this.dragOffsetY = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "y"), J.getCtm$0$x(this.body).f);
+    t1 = this.canvas;
+    t1.toString;
+    t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_mousemove._eventType, false);
+    H.setRuntimeTypeInfo(t1, [null]);
+    t2 = this.get$moveStarted();
+    t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t2), t1._useCapture);
+    H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
+    t2._tryResume$0();
+    t2.resume$0();
+    t2 = this.canvas;
+    t2.toString;
+    t2 = new W._ElementEventStreamImpl(t2, C.EventStreamProvider_mouseup._eventType, false);
+    H.setRuntimeTypeInfo(t2, [null]);
+    t1 = this.get$moveCompleted();
+    t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t1), t2._useCapture);
+    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
+    t1._tryResume$0();
+    t1.resume$0();
   },
   get$select: function(_receiver) {
     return new O.BoundClosure$i1(this, O.BasicUnit.prototype.select$1, _receiver, "select$1");
@@ -6028,8 +6052,27 @@ BasicUnit: {"": "Object;canvas,group,body,dragging,dragOffsetX,dragOffsetY,width
     return new H.BoundClosure$1(this, O.BasicUnit.prototype.moveStarted$1, null, "moveStarted$1");
   },
   moveCompleted$1: function(e) {
+    var t1, t2;
     J.preventDefault$0$x(e);
     this.dragging = false;
+    t1 = this.canvas;
+    t1.toString;
+    t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_mousemove._eventType, false);
+    H.setRuntimeTypeInfo(t1, [null]);
+    t2 = this.get$moveStarted();
+    t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t2), t1._useCapture);
+    H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
+    t2._tryResume$0();
+    t2.cancel$0();
+    t2 = this.canvas;
+    t2.toString;
+    t2 = new W._ElementEventStreamImpl(t2, C.EventStreamProvider_mouseup._eventType, false);
+    H.setRuntimeTypeInfo(t2, [null]);
+    t1 = this.get$moveCompleted();
+    t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t1), t2._useCapture);
+    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
+    t1._tryResume$0();
+    t1.cancel$0();
   },
   get$moveCompleted: function() {
     return new H.BoundClosure$1(this, O.BasicUnit.prototype.moveCompleted$1, null, "moveCompleted$1");
@@ -6076,30 +6119,6 @@ BasicUnit: {"": "Object;canvas,group,body,dragging,dragOffsetX,dragOffsetY,width
     t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t2), t1._useCapture);
     H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t2._tryResume$0();
-    t2 = this.body;
-    t2.toString;
-    t2 = new W._ElementEventStreamImpl(t2, C.EventStreamProvider_mousemove._eventType, false);
-    H.setRuntimeTypeInfo(t2, [null]);
-    t1 = this.get$moveStarted();
-    t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t1), t2._useCapture);
-    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
-    t1._tryResume$0();
-    t1 = this.body;
-    t1.toString;
-    t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_mouseup._eventType, false);
-    H.setRuntimeTypeInfo(t1, [null]);
-    t2 = this.get$moveCompleted();
-    t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t2), t1._useCapture);
-    H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
-    t2._tryResume$0();
-    t2 = this.body;
-    t2.toString;
-    t2 = new W._ElementEventStreamImpl(t2, C.EventStreamProvider_mouseleave._eventType, false);
-    H.setRuntimeTypeInfo(t2, [null]);
-    t1 = this.get$moveCompleted();
-    t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t1), t2._useCapture);
-    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
-    t1._tryResume$0();
     this.group = document.createElementNS("http://www.w3.org/2000/svg", "g");
     this.group.appendChild(this.body);
     this.dragging = false;
@@ -6323,7 +6342,6 @@ C.C__RootZone = new P._RootZone();
 C.Duration_0 = new P.Duration(0);
 C.EventStreamProvider_dblclick = new W.EventStreamProvider("dblclick");
 C.EventStreamProvider_mousedown = new W.EventStreamProvider("mousedown");
-C.EventStreamProvider_mouseleave = new W.EventStreamProvider("mouseleave");
 C.EventStreamProvider_mousemove = new W.EventStreamProvider("mousemove");
 C.EventStreamProvider_mouseup = new W.EventStreamProvider("mouseup");
 C.JSArray_methods = J.JSArray.prototype;
