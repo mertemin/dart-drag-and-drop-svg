@@ -1,5 +1,5 @@
 .DS_Store
 packages
-.deps
-.map
-.precompiled.js
+*.deps
+*.map
+*.precompiled.js
